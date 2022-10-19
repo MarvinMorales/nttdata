@@ -1,0 +1,5 @@
+{
+   "authorId": 1,
+   "environment": "development",
+   "apiContext": "https://bp-pokemons.herokuapp.com/"
+}

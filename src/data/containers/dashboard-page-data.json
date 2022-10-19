@@ -1,0 +1,21 @@
+{
+   "title": "Listado de Pokemón",
+   "inputPlaceholder": "Buscar",
+   "buttonValue": "Nuevo",
+   "dataRows": [
+      "Nombre",
+      "Imagen",
+      "Ataque",
+      "Defensa",
+      "Acciones"
+   ],
+   "subtitle": "Nuevo Pokemón",
+   "closeButton": "Cancelar",
+   "namePlaceHolder": "Nombre del pokemon",
+   "imagePlaceHolder": "Imagen del pokemon",
+   "inputTextLabels": ["Nombre:", "Imagen:"],
+   "saveButton": "Guardar",
+   "skills": ["Ataque:", "Defensa:"],
+   "range": [0, 100],
+   "pokemonTypes": ["Agua", "Fuego", "Hierba", "Hielo", "Roca"]
+}

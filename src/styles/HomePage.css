@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+.homeContainer {
+   width: 100vw;
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: rgb(240, 240, 240);
+}
+
+.routeButton {
+   padding: 15px 30px;
+   display: flex;
+   background-color: rgb(1, 128, 240);
+   justify-content: center;
+   border-radius: 4px;
+   align-items: center;
+   color: white;
+   cursor: pointer;
+}
