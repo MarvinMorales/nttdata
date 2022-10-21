@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Pokemon } from "../interfaces/pokemon";
+import { NewPokemon } from "../interfaces/pokemon";
 import configuration from "../data/configuration.json";
 
 // @ts-ignore
@@ -9,10 +9,10 @@ const query: string = "?idAuthor=";
 const getPokemons = async () => 
    axios.get(apiContext + query + authorId);
 
-const createNewPokemon = async (payload: Pokemon) => 
+const createNewPokemon = async (payload: NewPokemon) => 
    axios.post(apiContext + query + authorId, payload);
 
-const updatePokemon = async (payload: Pokemon, id: number) =>
+const updatePokemon = async (payload: NewPokemon, id: number) =>
    axios.put(apiContext + id, payload);
 
 const deletePokemon = async (id: number) => 
