@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+.modal {
+   width: 100vw;
+   height: 100vh;
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 100;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0,0,0,0.6);
+}
+
+.edit-window {
+   width: 80%;
+   padding: 0 20px;
+   background-color: rgb(255, 255, 255);
+}
+
+.close {
+   color: white;
+   position: absolute;
+   top: 30px;
+   right: 50px;
+   z-index: 101;
+}
+
+@media screen and (max-width: 320px) {
+   .edit-window {
+      width: 100%;
+      padding: 0 20px;
+      background-color: rgb(255, 255, 255);
+   }
+
+   .close {
+      color: white;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      z-index: 101;
+   }
+ }
