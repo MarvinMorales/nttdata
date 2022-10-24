@@ -34,6 +34,7 @@ export default function DashboardPage(): JSX.Element {
   const pokemonTypeLength: number = pokemonTypes.length;
   const { authorId } = configuration;
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [pokemonPhoto, setPokemonPhoto] = useState<string | null>(null);
   const [selectedPokemon, setSelectedPokemon] = useState<number[]>([]);
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [pokemonName, setPokemonName] = useState<string>("");
@@ -86,10 +87,12 @@ export default function DashboardPage(): JSX.Element {
         ...newPokemon,
         type: pokemonTypes[Math.floor(Math.random() * pokemonTypeLength)],
         hp: Math.floor(Math.random() * 100)
-      }).then(({ data }) => {
-        setPokemonList([...pokemonList, data]);
-        setAddNew(false);
-      }).catch((err) => console.error(err));
+      })
+        .then(({ data }) => {
+          setPokemonList([...pokemonList, data]);
+          setAddNew(false);
+        })
+        .catch((err) => console.error(err));
     }, 200);
   }, [
     createNewPokemon,
@@ -100,34 +103,34 @@ export default function DashboardPage(): JSX.Element {
   ]);
 
   // Updating Pokemon Data
-  const handleUpdatePokemon = useCallback(
-    () => {
-      const id = pokemonList.filter((elem) => elem.name === pokeName)[0].id;
-      updatePokemon({
-          ...newPokemon,
-          type: pokemonTypes[Math.floor(Math.random() * pokemonTypeLength)],
-          hp: Math.floor(Math.random() * 100)
-        }, id)
-        .then(({ data }) => {
-          if (data) {
-            const copy = pokemonList.filter((elem) => elem.id !== id);
-            copy.push(data);
-            setPokemonList(copy);
-            setPokeName(null);
-          }
-        })
-        .catch((err) => console.error(err));
-    },
-    [
-      updatePokemon, 
-      setPokeName, 
-      pokemonList, 
-      newPokemon, 
-      pokemonTypes,
-      pokeName,
-      pokemonTypeLength
-    ]
-  );
+  const handleUpdatePokemon = useCallback(() => {
+    const id = pokemonList.filter((elem) => elem.name === pokeName)[0].id;
+    updatePokemon(
+      {
+        ...newPokemon,
+        type: pokemonTypes[Math.floor(Math.random() * pokemonTypeLength)],
+        hp: Math.floor(Math.random() * 100)
+      },
+      id
+    )
+      .then(({ data }) => {
+        if (data) {
+          const copy = pokemonList.filter((elem) => elem.id !== id);
+          copy.push(data);
+          setPokemonList(copy);
+          setPokeName(null);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [
+    updatePokemon,
+    setPokeName,
+    pokemonList,
+    newPokemon,
+    pokemonTypes,
+    pokeName,
+    pokemonTypeLength
+  ]);
 
   const handleUpdateModal = (id: number) => {
     handleModalVisibility();
@@ -167,6 +170,14 @@ export default function DashboardPage(): JSX.Element {
       setTimeout(() => setPokemonName(""), 100);
     },
     [selectedPokemon, setPokemonName]
+  );
+
+  const handleShowImage = useCallback(
+    (imageUrl: string) => {
+      setShowModal(true);
+      setPokemonPhoto(imageUrl);
+    },
+    [setShowModal, setPokemonPhoto]
   );
 
   return (
@@ -226,7 +237,12 @@ export default function DashboardPage(): JSX.Element {
             .map((item: Pokemon) => {
               return titlesIndex.map((elem: string, ind: number) => (
                 <p key={ind} className="titleStyle">
-                  {ind === 1 && <FiImage className="pic" />}
+                  {ind === 1 && (
+                    <FiImage
+                      onClick={() => handleShowImage(item?.image)}
+                      className="pic"
+                    />
+                  )}
                   {ind !== 1 && ind !== 4 && item[elem]}
                   {ind === 4 && (
                     <div key={ind} className="imgContainer">
@@ -235,7 +251,7 @@ export default function DashboardPage(): JSX.Element {
                         className="pic"
                       />
                       <MdDeleteOutline
-                        onClick={() => handleDeletePokemon(item.id)}
+                        onClick={() => handleDeletePokemon(item?.id)}
                         className="pic"
                       />
                     </div>
@@ -254,11 +270,12 @@ export default function DashboardPage(): JSX.Element {
       )}
       <EditModal
         open={showModal}
+        image={pokemonPhoto && showModal ? pokemonPhoto : null}
         handleCancel={handleModalVisibility}
         handleCloseModal={handleModalVisibility}
         pokemonName={pokeName}
         handleCreateNewPokemon={handleFillPokemonSchema}
-        handleManageData={handleUpdatePokemon}
+        handleManageData={() => handleUpdatePokemon()}
       />
     </div>
   );
