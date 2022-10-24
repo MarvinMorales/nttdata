@@ -64,7 +64,6 @@
 .imgContainer {
   display: flex;
   width: 100%;
-  border-left: 1px dotted rgb(150, 150, 150);
   justify-content: center;
 }
 
@@ -128,12 +127,14 @@
   grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-rows: auto;
   border: 1px solid rgb(190, 190, 190);
+  border-bottom: none;
 }
 
 .titleStyle {
   text-align: center;
   font-weight: bold;
   padding: 10px;
+  border-bottom: 1px solid rgb(133, 133, 133);
   border-left: 1px dotted rgb(114, 114, 114);
 }
 
